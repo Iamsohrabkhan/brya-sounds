@@ -1,0 +1,19 @@
+```
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/brya-sound@64b713747aa4f110ebbdcb6d029eb0018180ff74/index.css" />
+<script defer src="https://cdn.jsdelivr.net/gh/Iamsohrabkhan/brya-sound@64b713747aa4f110ebbdcb6d029eb0018180ff74/index.js"></script>
+
+```
+
+```
+<link href="http://localhost:3000/index.css" rel="stylesheet" type="text/css"/>
+<script defer src="http://localhost:3000/index.js"></script>
+```
+
+```
+<link rel="stylesheet" href="https://1n1fqt1x-3000.asse.devtunnels.ms/index.css" />
+<script defer src="https://1n1fqt1x-3000.asse.devtunnels.ms/index.js"></script>
+```
+
+```
+git rev-parse HEAD
+```
