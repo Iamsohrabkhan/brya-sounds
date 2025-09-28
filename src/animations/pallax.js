@@ -6,7 +6,7 @@ export const pallax = () => {
   const scrollTrigger = {
     trigger: '.home-hero',
     start: 'top top',
-    end: 'bottom 20%',
+    end: 'bottom end',
     scrub: 1,
     // markers: true,
   };

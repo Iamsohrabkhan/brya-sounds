@@ -1,6 +1,7 @@
 .home-hero {
-  height: calc(100vh - var(--header-height)) !important;
+  /* height: calc(100vh - var(--header-height)) !important; */
 }
+
 .airpods-card:nth-child(2) {
   h5 {
     color: #ffc72c !important;
@@ -34,10 +35,22 @@
 .mountain-2 {
   /* transform: translateY(10%); */
 }
+header {
+  /* opacity: 0;
+  display: none;
+  visibility: hidden; */
+}
+html,body{
+  overflow-x: clip;
+}
 
 @media (min-width: 776px) {
   .masked-background {
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 0) 100%);
+    background-image: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 1) 70%,
+      rgba(255, 255, 255, 0) 100%
+    );
     background-repeat: no-repeat;
     background-size: 100% 100%;
   }
@@ -53,3 +66,11 @@
     background: linear-gradient(180deg, #fff 84.97%, rgba(255, 255, 255, 0) 100%) !important;
   }
 }
+  .gsap-marker-start,
+  .gsap-marker-end,
+  .gsap-marker-scroller-start,
+  .gsap-marker-scroller-end {
+    opacity: 1 !important;
+    display: block !important;
+    z-index: 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999 !important;
+  }
