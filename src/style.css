@@ -40,15 +40,16 @@ header {
   display: none;
   visibility: hidden; */
 }
-html,body{
+html,
+body {
   overflow-x: clip;
 }
 
 @media (min-width: 776px) {
-  /* .masked-background {
+  .masked-background {
     background-image: linear-gradient(
       to bottom,
-      rgba(255, 255, 255, 1) 70%,
+      rgba(255, 255, 255, 1) 60%,
       rgba(255, 255, 255, 0) 100%
     );
     background-repeat: no-repeat;
@@ -56,23 +57,35 @@ html,body{
   }
 
   .masked-bottom {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #fff 24.91%);
+    background-image: linear-gradient(
+      to top,
+      rgba(255, 255, 255, 1) 60%,
+      rgba(255, 255, 255, 0) 100%
+    );
     background-repeat: no-repeat;
     background-size: 100% 100%;
-  } */
+  }
 }
 @media (max-width: 776px) {
   .sticky-images {
     background: linear-gradient(180deg, #fff 84.97%, rgba(255, 255, 255, 0) 100%) !important;
   }
 }
-  .gsap-marker-start,
-  .gsap-marker-end,
-  .gsap-marker-scroller-start,
-  .gsap-marker-scroller-end {
-    opacity: 1 !important;
-    display: block !important;
-    z-index: 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999 !important;
-  }
+.gsap-marker-start,
+.gsap-marker-end,
+.gsap-marker-scroller-start,
+.gsap-marker-scroller-end {
+  opacity: 1 !important;
+  display: block !important;
+  z-index: 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999 !important;
+}
 
- 
+/* .non-sticky-card:nth-child(1){
+  background: rgb(108, 183, 240);
+}
+.non-sticky-card:nth-child(2){
+  background: rgb(240, 108, 108);
+}
+.non-sticky-card:nth-child(3){
+  background: rgb(240, 233, 108);
+} */

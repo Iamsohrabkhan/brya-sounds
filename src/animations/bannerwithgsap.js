@@ -14,7 +14,7 @@ const Banner = () => {
       const distanceFromTop = parentHeight / 2 - childHeight / 2;
 
       // set CSS variable on the child element
-      document.documentElement.style.setProperty('--dynamic-margin-top', `${-distanceFromTop}px`);
+      document.documentElement.style.setProperty('--dynamic-margin-top', `${distanceFromTop}px`);
       document.documentElement.style.setProperty('--dynamic-margin-bottom', `${distanceFromTop}px`);
     }
   }
@@ -53,7 +53,6 @@ const Banner = () => {
     },
     (context) => {
       let { isDesktop, isMobile } = context.conditions;
-
       nonSticky.forEach((curr, i) => {
         ScrollTrigger.create({
           trigger: curr,
