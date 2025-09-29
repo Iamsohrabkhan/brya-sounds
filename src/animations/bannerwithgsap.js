@@ -3,8 +3,27 @@ import gsap, { ScrollTrigger } from 'gsap/all';
 const Banner = () => {
   gsap.registerPlugin(ScrollTrigger);
 
-  const nonSticky = document.querySelectorAll('.flex-center');
+  const nonSticky = document.querySelectorAll('.non-sticky-card');
   const stickyImg = document.querySelectorAll('.sticky-img');
+  const stickyImages = document.querySelector('.sticky-images');
+
+  function updateMargin() {
+    if (stickyImages && stickyImg.length > 0) {
+      const parentHeight = stickyImages.offsetHeight;
+      const childHeight = stickyImg[0].offsetHeight;
+      const distanceFromTop = parentHeight / 2 - childHeight / 2;
+
+      // set CSS variable on the child element
+      document.documentElement.style.setProperty('--dynamic-margin-top', `${-distanceFromTop}px`);
+      document.documentElement.style.setProperty('--dynamic-margin-bottom', `${distanceFromTop}px`);
+    }
+  }
+
+  // run once when page loads
+  window.addEventListener('load', updateMargin);
+
+  // run again whenever window is resized
+  window.addEventListener('resize', updateMargin);
 
   // helper function to show only one img at a time
   const showImage = (index) => {
@@ -28,9 +47,9 @@ const Banner = () => {
   mm.add(
     {
       // larger screens
-      isDesktop: "(min-width: 768px)",
+      isDesktop: '(min-width: 768px)',
       // smaller screens
-      isMobile: "(max-width: 767px)",
+      isMobile: '(max-width: 767px)',
     },
     (context) => {
       let { isDesktop, isMobile } = context.conditions;
@@ -38,9 +57,9 @@ const Banner = () => {
       nonSticky.forEach((curr, i) => {
         ScrollTrigger.create({
           trigger: curr,
-          start: isDesktop ? "top center" : "top 60%",
-          end: isDesktop ? "bottom center" : "bottom 60%",
-        //   markers: true,
+          start: isDesktop ? 'top center' : 'top 60%',
+          end: isDesktop ? 'bottom center' : 'bottom 60%',
+          markers: true,
           onEnter: () => showImage(i),
           onEnterBack: () => showImage(i),
         });
