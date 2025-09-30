@@ -57,23 +57,35 @@ const Banner = () => {
     },
     (context) => {
       let { isDesktop, isMobile } = context.conditions;
-      nonSticky.forEach((curr, i) => {
-        ScrollTrigger.create({
-          trigger: curr,
-          start: () => {
-            const top = innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
-            return isDesktop ? `top ${top}` : 'top 60%';
-          },
-          end: () => {
-            const top = innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
-            return isDesktop ? `bottom ${top}` : 'bottom 60%';
-          },
-          // markers: true,
-          onEnter: () => showImage(i),
-          onEnterBack: () => showImage(i),
+      if (isDesktop) {
+        nonSticky.forEach((curr, i) => {
+          ScrollTrigger.create({
+            trigger: curr,
+            start: () => {
+              const top = innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
+              return `top ${top}`;
+            },
+            end: () => {
+              const top = innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
+              return `bottom ${top}`;
+            },
+            // markers: true,
+            onEnter: () => showImage(i),
+            onEnterBack: () => showImage(i),
+          });
         });
-      });
-     
+      } else {
+        nonSticky.forEach((curr, i) => {
+          ScrollTrigger.create({
+            trigger: curr,
+            start: 'top 60%',
+            end: 'bottom 60%',
+            // markers: true,
+            onEnter: () => showImage(i),
+            onEnterBack: () => showImage(i),
+          });
+        });
+      }
     }
   );
 };
