@@ -23,7 +23,10 @@ const Banner = () => {
   window.addEventListener('load', updateMargin);
 
   // run again whenever window is resized
-  window.addEventListener('resize', updateMargin);
+  window.addEventListener('resize', () => {
+    updateMargin();
+    ScrollTrigger.refresh(); // recalc all start/end positions
+  });
 
   // helper function to show only one img at a time
   const showImage = (index) => {
@@ -56,8 +59,14 @@ const Banner = () => {
       nonSticky.forEach((curr, i) => {
         ScrollTrigger.create({
           trigger: curr,
-          start: isDesktop ? 'top center' : 'top 60%',
-          end: isDesktop ? 'bottom center' : 'bottom 60%',
+          start: () => {
+            const top = innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
+            return isDesktop ? `top ${top}` : 'top 60%';
+          },
+          end: () => {
+            const top = innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
+            return isDesktop ? `bottom ${top}` : 'bottom 60%';
+          },
           markers: true,
           onEnter: () => showImage(i),
           onEnterBack: () => showImage(i),
