@@ -6,6 +6,7 @@ const Banner = () => {
   const nonSticky = document.querySelectorAll('.non-sticky-card');
   const stickyImg = document.querySelectorAll('.sticky-img');
   const stickyImages = document.querySelector('.sticky-images');
+  const maskedBackground = document.querySelector('.masked-bottom');
 
   function updateMargin() {
     if (stickyImages && stickyImg.length > 0) {
@@ -25,7 +26,7 @@ const Banner = () => {
   // run again whenever window is resized
   window.addEventListener('resize', () => {
     updateMargin();
-    ScrollTrigger.refresh(); // recalc all start/end positions
+    ScrollTrigger.refresh();
   });
 
   // helper function to show only one img at a time
@@ -67,11 +68,12 @@ const Banner = () => {
             const top = innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
             return isDesktop ? `bottom ${top}` : 'bottom 60%';
           },
-          markers: true,
+          // markers: true,
           onEnter: () => showImage(i),
           onEnterBack: () => showImage(i),
         });
       });
+     
     }
   );
 };
