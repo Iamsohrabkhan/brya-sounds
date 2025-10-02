@@ -57,8 +57,8 @@ const Banner = () => {
       nonSticky.forEach((curr, i) => {
         ScrollTrigger.create({
           trigger: curr,
-          start: isDesktop ? 'top center' : 'top 60%',
-          end: isDesktop ? 'bottom center' : 'bottom 60%',
+          start: isDesktop ? 'top 40%' : 'top 60%',
+          end: isDesktop ? 'bottom 40%' : 'bottom 60%',
           markers: true,
           onEnter: () => showImage(i),
           onEnterBack: () => showImage(i),
