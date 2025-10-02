@@ -9,8 +9,8 @@ import { pallax } from './animations/pallax.js';
 import './style.css';
 
 document.addEventListener('DOMContentLoaded', () => {
-  pallax();
   useLenis();
+  pallax();
   banner();
 
 

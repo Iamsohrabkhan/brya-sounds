@@ -34,13 +34,13 @@ const useLenis = () => {
   requestAnimationFrame(raf);
 };
 
-const banner = () => {
+
+const Banner = () => {
   gsap.registerPlugin(ScrollTrigger);
 
   const nonSticky = document.querySelectorAll('.non-sticky-card');
   const stickyImg = document.querySelectorAll('.sticky-img');
   const stickyImages = document.querySelector('.sticky-images');
-  const maskedBackground = document.querySelector('.masked-bottom');
 
   function updateMargin() {
     if (stickyImages && stickyImg.length > 0) {
@@ -48,7 +48,8 @@ const banner = () => {
       const childHeight = stickyImg[0].offsetHeight;
       const distanceFromTop = parentHeight / 2 - childHeight / 2;
 
-      document.documentElement.style.setProperty('--dynamic-margin-top', `${distanceFromTop}px`);
+      // set CSS variable on the child element
+      document.documentElement.style.setProperty('--dynamic-margin-top', `${-distanceFromTop}px`);
       document.documentElement.style.setProperty('--dynamic-margin-bottom', `${distanceFromTop}px`);
     }
   }
@@ -57,10 +58,7 @@ const banner = () => {
   window.addEventListener('load', updateMargin);
 
   // run again whenever window is resized
-  window.addEventListener('resize', () => {
-    updateMargin();
-    ScrollTrigger.refresh();
-  });
+  window.addEventListener('resize', updateMargin);
 
   // helper function to show only one img at a time
   const showImage = (index) => {
@@ -94,20 +92,19 @@ const banner = () => {
       nonSticky.forEach((curr, i) => {
         ScrollTrigger.create({
           trigger: curr,
-          start: isDesktop ? 'top 40%' : 'top 60%',
-          end: isDesktop ? 'bottom 40%' : 'bottom 60%',
+          start: isDesktop ? 'top center' : 'top 60%',
+          end: isDesktop ? 'bottom center' : 'bottom 60%',
+          markers: true,
           onEnter: () => showImage(i),
           onEnterBack: () => showImage(i),
-          //markers: true,
         });
       });
     }
   );
 };
-
 document.addEventListener('DOMContentLoaded', () => {
   parallax();
   useLenis();
-  banner();
+  Banner();
 });
 </script> 
