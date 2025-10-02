@@ -91,7 +91,7 @@ const Banner = () => {
             const top = window.innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
             return isDesktop ? `bottom ${top}` : 'bottom 60%';
           },
-          markers: true,
+          // markers: true,
           invalidateOnRefresh: true,
           onEnter: () => showImage(i),
           onEnterBack: () => showImage(i),
