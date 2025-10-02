@@ -52,9 +52,11 @@
     "typescript-eslint": "^8.23.0"
   },
   "dependencies": {
+    "@finsweet/developer-starter": "link:",
     "@finsweet/ts-utils": "^0.40.0",
     "gsap": "^3.13.0",
-    "lenis": "^1.3.11"
+    "lenis": "^1.3.11",
+    "motion": "^12.23.22"
   },
   "engines": {
     "pnpm": ">=10"

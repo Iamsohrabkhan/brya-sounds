@@ -1,12 +1,25 @@
-import gsap, { ScrollTrigger } from 'gsap/all';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const Banner = () => {
   gsap.registerPlugin(ScrollTrigger);
+
+  // iOS Safari scroll configuration
+  ScrollTrigger.config({
+    autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load',
+    ignoreMobileResize: true,
+  });
 
   const nonSticky = document.querySelectorAll('.non-sticky-card');
   const stickyImg = document.querySelectorAll('.sticky-img');
   const stickyImages = document.querySelector('.sticky-images');
   const maskedBackground = document.querySelector('.masked-bottom');
+
+  // Early return if elements don't exist
+  if (!stickyImages || stickyImg.length === 0 || nonSticky.length === 0) {
+    console.warn('Banner elements not found');
+    return;
+  }
 
   function updateMargin() {
     if (stickyImages && stickyImg.length > 0) {
@@ -14,22 +27,12 @@ const Banner = () => {
       const childHeight = stickyImg[0].offsetHeight;
       const distanceFromTop = parentHeight / 2 - childHeight / 2;
 
-      // set CSS variable on the child element
       document.documentElement.style.setProperty('--dynamic-margin-top', `${distanceFromTop}px`);
       document.documentElement.style.setProperty('--dynamic-margin-bottom', `${distanceFromTop}px`);
     }
   }
 
-  // run once when page loads
-  window.addEventListener('load', updateMargin);
-
-  // run again whenever window is resized
-  window.addEventListener('resize', () => {
-    updateMargin();
-    ScrollTrigger.refresh();
-  });
-
-  // helper function to show only one img at a time
+  // Helper function to show only one img at a time
   const showImage = (index) => {
     stickyImg.forEach((img, i) => {
       if (i === index) {
@@ -42,52 +45,65 @@ const Banner = () => {
     });
   };
 
-  // init: show first image
+  // Initialize
   showImage(0);
+  updateMargin();
 
-  // create matchMedia instance
+  // Debounced resize handler for better iOS performance
+  let resizeTimer;
+  const handleResize = () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      updateMargin();
+      ScrollTrigger.refresh();
+    }, 250);
+  };
+
+  window.addEventListener('resize', handleResize, { passive: true });
+
+  // iOS specific: refresh on orientation change
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => {
+      updateMargin();
+      ScrollTrigger.refresh();
+    }, 200);
+  });
+
+  // Create matchMedia instance
   const mm = gsap.matchMedia();
 
   mm.add(
     {
-      // larger screens
       isDesktop: '(min-width: 768px)',
-      // smaller screens
       isMobile: '(max-width: 767px)',
     },
     (context) => {
-      let { isDesktop, isMobile } = context.conditions;
-      if (isDesktop) {
-        nonSticky.forEach((curr, i) => {
-          ScrollTrigger.create({
-            trigger: curr,
-            start: () => {
-              const top = innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
-              return `top ${top}`;
-            },
-            end: () => {
-              const top = innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
-              return `bottom ${top}`;
-            },
-            // markers: true,
-            onEnter: () => showImage(i),
-            onEnterBack: () => showImage(i),
-          });
+      let { isDesktop } = context.conditions;
+
+      nonSticky.forEach((curr, i) => {
+        ScrollTrigger.create({
+          trigger: curr,
+          start: () => {
+            const top = window.innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
+            return isDesktop ? `top ${top}` : 'top 60%';
+          },
+          end: () => {
+            const top = window.innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
+            return isDesktop ? `bottom ${top}` : 'bottom 60%';
+          },
+          markers: true,
+          invalidateOnRefresh: true,
+          onEnter: () => showImage(i),
+          onEnterBack: () => showImage(i),
         });
-      } else {
-        nonSticky.forEach((curr, i) => {
-          ScrollTrigger.create({
-            trigger: curr,
-            start: 'top 60%',
-            end: 'bottom 60%',
-            // markers: true,
-            onEnter: () => showImage(i),
-            onEnterBack: () => showImage(i),
-          });
-        });
-      }
+      });
     }
   );
+
+  // Initial refresh for iOS (after short delay)
+  setTimeout(() => {
+    ScrollTrigger.refresh();
+  }, 100);
 };
 
 export default Banner;

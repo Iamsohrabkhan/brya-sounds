@@ -1,6 +1,5 @@
 import Lenis from 'lenis';
 const useLenis = () => {
-  // Initialize Lenis
   const lenis = new Lenis({
     lerp: 0.09,
   });
