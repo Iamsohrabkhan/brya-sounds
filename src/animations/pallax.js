@@ -11,8 +11,9 @@ export const pallax = () => {
   };
  
   const animations = [
-    { target: '.mountain-1', from: { yPercent: 25 }, to: { yPercent: 10 } },
-    { target: '.mountain-2', from: { yPercent: 10 }, to: { yPercent: 0 } },
+    { target: '.mountain-1', from: { yPercent: 15 }, to: { yPercent: 0 } },
+    { target: '.mountain-2', from: { yPercent: 25 }, to: { yPercent: 0 } },
+    { target: '.hero-heading', from: { yPercent: 25 }, to: { yPercent: 0 } },
   ];
 
   animations.forEach(({ target, from, to }) => {
