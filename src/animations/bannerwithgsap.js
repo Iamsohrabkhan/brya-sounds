@@ -1,4 +1,4 @@
-import gsap, { ScrollTrigger } from "gsap/all";
+import gsap, { ScrollTrigger } from 'gsap/all';
 
 const Banner = () => {
   gsap.registerPlugin(ScrollTrigger);
@@ -6,24 +6,21 @@ const Banner = () => {
   const nonSticky = document.querySelectorAll('.non-sticky-card');
   const stickyImg = document.querySelectorAll('.sticky-img');
   const stickyImages = document.querySelector('.sticky-images');
-
   function updateMargin() {
-    if (stickyImages && stickyImg.length > 0) {
+    if (stickyImages && stickyImg.length) {
+      // console.log('parent height:', stickyImages.offsetHeight);
+      // console.log('child height:', stickyImg[0].offsetHeight);
+
       const parentHeight = stickyImages.offsetHeight;
       const childHeight = stickyImg[0].offsetHeight;
       const distanceFromTop = parentHeight / 2 - childHeight / 2;
 
-      // set CSS variable on the child element
+      // console.log('🚀 ~ updateMargin ~ distanceFromTop:', distanceFromTop);
+
       document.documentElement.style.setProperty('--dynamic-margin-top', `${distanceFromTop}px`);
       document.documentElement.style.setProperty('--dynamic-margin-bottom', `${distanceFromTop}px`);
     }
   }
-
-  // run once when page loads
-  window.addEventListener('load', updateMargin);
-
-  // run again whenever window is resized
-  window.addEventListener('resize', updateMargin);
 
   // helper function to show only one img at a time
   const showImage = (index) => {
@@ -68,8 +65,6 @@ const Banner = () => {
   );
 };
 export default Banner;
-
-
 
 // import gsap, { ScrollTrigger } from 'gsap/all';
 
