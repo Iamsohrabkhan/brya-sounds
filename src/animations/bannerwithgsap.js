@@ -6,22 +6,7 @@ const Banner = () => {
   const nonSticky = document.querySelectorAll('.non-sticky-card');
   const stickyImg = document.querySelectorAll('.sticky-img');
   const stickyImages = document.querySelector('.sticky-images');
-  function updateMargin() {
-    if (stickyImages && stickyImg.length) {
-      // console.log('parent height:', stickyImages.offsetHeight);
-      // console.log('child height:', stickyImg[0].offsetHeight);
-
-      const parentHeight = stickyImages.offsetHeight;
-      const childHeight = stickyImg[0].offsetHeight;
-      const distanceFromTop = parentHeight / 2 - childHeight / 2;
-
-      // console.log('🚀 ~ updateMargin ~ distanceFromTop:', distanceFromTop);
-
-      document.documentElement.style.setProperty('--dynamic-margin-top', `${distanceFromTop}px`);
-      document.documentElement.style.setProperty('--dynamic-margin-bottom', `${distanceFromTop}px`);
-    }
-  }
-
+ 
   // helper function to show only one img at a time
   const showImage = (index) => {
     stickyImg.forEach((img, i) => {
@@ -54,11 +39,21 @@ const Banner = () => {
       nonSticky.forEach((curr, i) => {
         ScrollTrigger.create({
           trigger: curr,
-          start: isDesktop ? 'top 40%' : 'top 60%',
-          end: isDesktop ? 'bottom 40%' : 'bottom 60%',
+         start: () => {
+            const top = innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
+            return isDesktop ? `top ${top}` : 'top 60%';
+          },
+          end: () => {
+            const top = innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
+            return isDesktop ? `bottom ${top}` : 'bottom 60%';
+          },
           // markers: true,
           onEnter: () => showImage(i),
           onEnterBack: () => showImage(i),
+          onLeaveBack: () => {
+            // scrolling up, leaving viewport
+            if (nonSticky[i - 1]) showImage(i - 1); // show previous section
+          },
         });
       });
     }

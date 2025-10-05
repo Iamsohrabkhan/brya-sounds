@@ -58,13 +58,11 @@ body {
 
   background-repeat: no-repeat;
   background-size: 100% 100%;
-  /* background: red; */
+  display: none;
 }
 
 .masked-bottom {
-  /* background: linear-gradient(180deg, rgba(255, 0, 0, 0) 0%, #ffffff 21.97%); */
   background: linear-gradient(180deg, rgba(255, 0, 0, 0) 0%, #ffffff 21.97%);
-
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
@@ -81,7 +79,20 @@ body {
 .gsap-marker-scroller-end {
   opacity: 1 !important;
   display: block !important;
-  z-index: 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999 !important;
+  z-index: 99999999 !important;
+}
+
+.banner{
+  picture {
+    display: inline-block;
+    height: auto !important;
+  }
+
+  picture > img {
+    display: block;
+    height: auto;
+    max-width: 100%;
+  }
 }
 
 /* .non-sticky-card:nth-child(1){
