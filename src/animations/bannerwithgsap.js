@@ -39,14 +39,16 @@ const Banner = () => {
       nonSticky.forEach((curr, i) => {
         ScrollTrigger.create({
           trigger: curr,
-         start: () => {
-            const top = innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
-            return isDesktop ? `top ${top}` : 'top 60%';
-          },
-          end: () => {
-            const top = innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
-            return isDesktop ? `bottom ${top}` : 'bottom 60%';
-          },
+          start: isDesktop ? 'top 40%' : 'top 60%',
+          end: isDesktop ? 'bottom 40%' : 'bottom 60%',
+          // start: () => {
+          //   const top = innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
+          //   return isDesktop ? `top ${top}` : 'top 60%';
+          // },
+          // end: () => {
+          //   const top = innerHeight / 2 - stickyImg[0].getBoundingClientRect().height / 2;
+          //   return isDesktop ? `bottom ${top}` : 'bottom 60%';
+          // },
           // markers: true,
           onEnter: () => showImage(i),
           onEnterBack: () => showImage(i),
