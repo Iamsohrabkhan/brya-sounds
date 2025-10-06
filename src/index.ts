@@ -6,12 +6,13 @@ import marginSize from './animations/marginsize.js';
 // import Banner from './animations/bannerwithmotion.js';
 import { Snap } from './animations/snap.js';
 import { snapto } from './animations/snapto.js';
-import { pallax } from './animations/pallax.js';
+import { parallax } from './animations/pallax.js';
 import './style.css';
 
 document.addEventListener('DOMContentLoaded', () => {
   useLenis();
-  pallax();
+  parallax();
   banner();
   marginSize();
 });
+window.addEventListener('resize', marginSize);
