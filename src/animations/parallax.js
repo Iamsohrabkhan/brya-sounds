@@ -34,7 +34,7 @@ export const parallax = () => {
         : [
             { target: '.mountain-1', from: { yPercent: 25 }, to: { yPercent: 15 } },
             { target: '.mountain-2', from: { yPercent: 50 }, to: { yPercent: 0 } },
-            { target: '.hero-heading', from: { yPercent: 15 }, to: { yPercent: 0 } },
+            { target: '.hero-heading', from: { yPercent: -50 }, to: { yPercent: -0 } },
           ];
 
       // Create the tweens
