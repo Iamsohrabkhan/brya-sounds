@@ -56,7 +56,8 @@ const lastBannerzIndex = () => {
 
 function createScrollSequence(selector, url, frameCount) {
   const canvas = document.querySelector(selector);
-  const context = canvas.getContext('2d');
+  // Enable alpha transparency in canvas
+  const context = canvas.getContext('2d', { alpha: true });
   const images = [];
   const sequence = { frame: 0 };
   const dpr = window.devicePixelRatio || 1;
@@ -80,11 +81,9 @@ function createScrollSequence(selector, url, frameCount) {
     const height = width; // keep square
     const currentDpr = window.devicePixelRatio || 1;
 
-    // Set canvas internal resolution
     canvas.width = Math.round(width * currentDpr);
     canvas.height = Math.round(height * currentDpr);
 
-    // Set CSS display size
     canvas.style.width = width + 'px';
     canvas.style.height = height + 'px';
 
@@ -94,8 +93,6 @@ function createScrollSequence(selector, url, frameCount) {
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
-  // Scroll animation using GSAP
-  gsap.registerPlugin(ScrollTrigger);
   gsap.to(sequence, {
     frame: frameCount - 1,
     snap: 'frame',
@@ -105,12 +102,15 @@ function createScrollSequence(selector, url, frameCount) {
       start: 'bottom 90%',
       end: 'bottom center',
       scrub: 0.5,
-      // markers: true, // enable for debugging
+      markers: true,
     },
     onUpdate: render,
   });
 
   images[0].onload = () => resizeCanvas();
+context.clearRect(0, 0, canvas.width, canvas.height);
+context.fillStyle = 'rgba(255, 0, 0, 0.2)';
+context.fillRect(0, 0, canvas.width, canvas.height);
 
   function render() {
     const img = images[Math.floor(sequence.frame)];
@@ -119,7 +119,6 @@ function createScrollSequence(selector, url, frameCount) {
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
 
-    // Work with CSS dimensions for aspect ratio calculations
     const cssWidth = canvas.offsetWidth;
     const cssHeight = canvas.offsetHeight;
 
@@ -128,7 +127,6 @@ function createScrollSequence(selector, url, frameCount) {
 
     let drawWidth, drawHeight, offsetX, offsetY;
 
-    // Contain logic - calculate in CSS space, then scale to canvas space
     if (imgAspect > canvasAspect) {
       drawWidth = cssWidth * dpr;
       drawHeight = drawWidth / imgAspect;
@@ -141,35 +139,30 @@ function createScrollSequence(selector, url, frameCount) {
       offsetY = 0;
     }
 
-    // Save context state
     context.save();
-
-    // Clear with identity matrix
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    // Set high-quality rendering
     context.imageSmoothingEnabled = true;
     context.imageSmoothingQuality = 'high';
 
-    // Black background
-    context.fillStyle = '#000';
-    context.fillRect(0, 0, canvasWidth, canvasHeight);
+    // Remove the black background fill
+    // context.fillStyle = '#000';
+    // context.fillRect(0, 0, canvasWidth, canvasHeight);
 
-    // Draw image at exact pixel dimensions
     context.drawImage(
       img,
       0,
       0,
       img.naturalWidth,
-      img.naturalHeight, // Source dimensions
+      img.naturalHeight,
       Math.round(offsetX),
-      Math.round(offsetY), // Round to prevent sub-pixel rendering
+      Math.round(offsetY),
       Math.round(drawWidth),
-      Math.round(drawHeight) // Round dimensions
+      Math.round(drawHeight)
     );
 
-    // Restore context
     context.restore();
   }
 }
+
